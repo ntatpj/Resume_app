@@ -1,7 +1,24 @@
 # Resume_app
 Here are the step-by-step details to set up an end-to-end Jenkins pipeline for a python application using  Argo CD, Helm, and Kubernetes:
 Overview:
+ Define the pipeline stages:
+    Stage 1: Checkout the source code from Git.
+    Stage 2: Build and image from this python code.
+    Stage 3: Push the image to manifest Git repo
+    Stage 6: Deploy the application to a test environment using Helm.
+    Stage 7: Run user acceptance tests on the deployed application.
+    Stage 8: Promote the application to a production environment using Argo CD.
 ![image](https://github.com/user-attachments/assets/450879bc-a101-483e-a8c2-47e8ef50568d)
+
+
+Prerequisites:
+
+Python Resume application code hosted on a Git repository
+Jenkins server - ( Hosted on EC2 )
+Kubernetes cluster - (minikube installed on windows11 laptop)
+Helm package manager -(installed on windows11 laptop)
+Argo CD- (installed with Helm on minikube)
+
 
 <h3>   1.AWS EC2 Instance </h3>   
  
@@ -103,8 +120,15 @@ Jenkins Installation is Successful. You can now starting using the Jenkins
 
 Wait for the Jenkins to be restarted.
 
+  
+  1. Install the necessary Jenkins plugins:
+     Docker Pipeline pulgin
+  
+  2. Create a new Jenkins pipeline:
+     2.1 In Jenkins, create a new pipeline job and configure it with the Git repository URL for the Java application.
+     2.2 Add a Jenkinsfile to the Git repository to define the pipeline stages.
 
-## Docker Slave Configuration
+## 3. Docker Slave Configuration on EC2 instaance.
 
 Run the below command to Install Docker
 
@@ -130,9 +154,26 @@ http://<ec2-instance-public-ip>:8080/restart
 
 The docker agent configuration is now successful.
 
-usermod -aG docker ubuntu
-systemctl restart docker
-Once you are done with the above steps, it is better to restart Jenkins.
+## 4. Set up Docker Engine in windows.
+## 5. Install minikube on laptop. We have installed with docker as driver here. 
+## 6. Install helm on windows.
+## 7. Set up Argo CD using Helm chart.
+    Install Argo CD on the Kubernetes cluster.
+    Set up a Git repository for Argo CD to track the changes in the Helm charts and Kubernetes manifests.
+    Create a Helm chart for the Python application that includes the Kubernetes manifests and Helm values.
+    Add the Helm chart to the Git repository that Argo CD is tracking.
 
-http://<ec2-instance-public-ip>:8080/restart
+## Configure Jenkins pipeline to integrate with Argo CD:
+   6.1 Add the Argo CD API token to Jenkins credentials.
+   6.2 Update the Jenkins pipeline to include the Argo CD deployment stage.
+
+##. Run the Jenkins pipeline:
+   7.1 Trigger the Jenkins pipeline to start the CI/CD process for the Java application.
+   7.2 Monitor the pipeline stages and fix any issues that arise.
+     ```
+      usermod -aG docker ubuntu
+      systemctl restart docker```
+      Once you are done with the above steps, it is better to restart Jenkins.
+
+http://<ec2-instance-public-ip>:8000/restart
 The docker agent configuration is now successful.
