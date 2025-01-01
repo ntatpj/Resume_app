@@ -3,21 +3,24 @@ Here are the step-by-step details to set up an end-to-end Jenkins pipeline for a
 Overview:
 ![image](https://github.com/user-attachments/assets/450879bc-a101-483e-a8c2-47e8ef50568d)
 
-1. Create EC2 instance. Select t3.large with security group having inbound allowing port 8080,22,8000.
-   AWS EC2 Instance
+<h3>   1.AWS EC2 Instance </h3>   
+ 
+Create EC2 instance. Select t3.large with security group having inbound allowing port 8080,22,8000.
 Go to AWS Console
 Instances(running)
 Launch instances
-Screenshot 2023-02-01 at 12 37 45 PM
+![image](https://github.com/user-attachments/assets/94938176-dc0d-44bd-9950-a9769346d193)
 
-Install Jenkins.
+
+ <h3> 2.   Install Jenkins. </h3>   
+    
 Pre-Requisites:
 
 Java (JDK)
 Run the below commands to install Java and Jenkins
 Install Java
 
-sudo apt update
+'''sudo apt update
 sudo apt install openjdk-17-jre
 Verify Java is Installed
 
@@ -30,7 +33,7 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
   https://pkg.jenkins.io/debian binary/ | sudo tee \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
 sudo apt-get update
-sudo apt-get install jenkins
+sudo apt-get install jenkins'''
 **Note: ** By default, Jenkins will not be accessible to the external world due to the inbound traffic restriction by AWS. Open port 8080 in the inbound traffic rules as show below.
 
 EC2 > Instances > Click on
