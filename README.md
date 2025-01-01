@@ -163,17 +163,12 @@ The docker agent configuration is now successful.
     Create a Helm chart for the Python application that includes the Kubernetes manifests and Helm values.
     Add the Helm chart to the Git repository that Argo CD is tracking.
 
+## 8. Set up Prometheus and Grafana on minikube using Helm chart.
 ## Configure Jenkins pipeline to integrate with Argo CD:
    6.1 Add the Argo CD API token to Jenkins credentials.
    6.2 Update the Jenkins pipeline to include the Argo CD deployment stage.
 
-##. Run the Jenkins pipeline:
-   7.1 Trigger the Jenkins pipeline to start the CI/CD process for the Java application.
+###. Run the Jenkins pipeline:
+   7.1 Trigger the Jenkins pipeline to start the CI/CD process for the Python application.
    7.2 Monitor the pipeline stages and fix any issues that arise.
-     ```
-      usermod -aG docker ubuntu
-      systemctl restart docker```
-      Once you are done with the above steps, it is better to restart Jenkins.
-
-http://<ec2-instance-public-ip>:8000/restart
-The docker agent configuration is now successful.
+   
