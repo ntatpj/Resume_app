@@ -156,6 +156,46 @@ The docker agent configuration is now successful.
 
 ## 4. Set up Docker Engine in windows.
 ## 5. Install minikube on laptop. We have installed with docker as driver here. 
+
+```
+ winget install Kubernetes.minikube
+Found an existing package already installed. Trying to upgrade the installed package...
+Found Kubernetes - Minikube - A Local Kubernetes Development Environment [Kubernetes.minikube] Version 1.34.0
+This application is licensed to you by its owner.
+Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+Downloading https://github.com/kubernetes/minikube/releases/download/v1.34.0/minikube-installer.exe
+An unexpected error occurred while executing the command:
+InternetReadFile() failed.
+0x80072ee2 : unknown error
+
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ minikube start --memory=4098 --driver=docker
+* minikube v1.32.0 on Microsoft Windows 11 Home Single Language 10.0.22631.4602 Build 22631.4602
+* Using the docker driver based on user configuration
+* Using Docker Desktop driver with root privileges
+* Starting control plane node minikube in cluster minikube
+* Pulling base image ...
+* Creating docker container (CPUs=2, Memory=4098MB) ...
+* Preparing Kubernetes v1.28.3 on Docker 24.0.7 ...
+  - Generating certificates and keys ...
+  - Booting up control plane ...
+  - Configuring RBAC rules ...
+* Configuring bridge CNI (Container Networking Interface) ...
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+* Verifying Kubernetes components...
+* Enabled addons: storage-provisioner, default-storageclass
+* Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+
+```
 ## 6. Install helm on windows.
 ## 7. Set up Argo CD using Helm chart.
     Install Argo CD on the Kubernetes cluster.
