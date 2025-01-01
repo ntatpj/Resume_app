@@ -393,22 +393,60 @@ To connect to your Redis server:
 2. Connect using the Redis CLI:
 
   redis-cli -h myargo-redis-ha.myargo.svc.cluster.local
+```
+Check the pods and services.
+```
+$ kubectl get svc
+NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
+example-argocd-metrics          ClusterIP   10.99.77.234     <none>        8082/TCP            26m
+example-argocd-redis            ClusterIP   10.99.192.14     <none>        6379/TCP            26m
+example-argocd-repo-server      ClusterIP   10.103.238.38    <none>        8081/TCP,8084/TCP   26m
+example-argocd-server           ClusterIP   10.102.210.196   <none>        80/TCP,443/TCP      36s
+example-argocd-server-metrics   ClusterIP   10.103.9.69      <none>        8083/TCP            26m
+kubernetes     
 
-ADMIN@DESKTOP-LOTVTQN MINGW64 ~/argo-helm/charts/argo-cd/charts/redis-ha (main)
-$ kubectl get po -n myargo
-NAME                       READY   STATUS     RESTARTS   AGE
-myargo-redis-ha-server-0   0/3     Init:0/1   0          12s
+```
+If you notice above example-argocd-server is of type clusterIp, we will change ti to NodePort so that we can access the argocd GUI.
+```
 
-ADMIN@DESKTOP-LOTVTQN MINGW64 ~/argo-helm/charts/argo-cd/charts/redis-ha (main)
-$ kubectl get po -n myargo -w
-NAME                       READY   STATUS     RESTARTS   AGE
-myargo-redis-ha-server-0   0/3     Init:0/1   0          19s
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ kubectl patch service example-argocd-server -n default --type='json' -p='[{"op": "replace", "path": "/spec/type", "value": "NodePort"}]'
 
+service/example-argocd-server patched
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ kubectl get svc
+NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+example-argocd-metrics          ClusterIP   10.99.77.234     <none>        8082/TCP                     38m
+example-argocd-redis            ClusterIP   10.99.192.14     <none>        6379/TCP                     38m
+example-argocd-repo-server      ClusterIP   10.103.238.38    <none>        8081/TCP,8084/TCP            38m
+example-argocd-server           NodePort    10.102.210.196   <none>        80:31188/TCP,443:31388/TCP   12m
+example-argocd-server-metrics   ClusterIP   10.103.9.69      <none>        8083/TCP                     38m
+kubernetes                    
+```
+
+by using below command you can generate URL for the this service argocd-server
+```
+$ minikube service example-argocd-server
+
+|-----------|-----------------------|-------------|--------------|
+| NAMESPACE |         NAME          | TARGET PORT |     URL      |
+|-----------|-----------------------|-------------|--------------|
+| default   | example-argocd-server |             | No node port |
+|-----------|-----------------------|-------------|--------------|
+* service default/example-argocd-server has no node port
+* Starting tunnel for service example-argocd-server.
+|-----------|-----------------------|-------------|------------------------|
+| NAMESPACE |         NAME          | TARGET PORT |          URL           |
+|-----------|-----------------------|-------------|------------------------|
+| default   | example-argocd-server |             | http://127.0.0.1:60750 |
+|           |                       |             | http://127.0.0.1:60751 |
+|-----------|-----------------------|-------------|------------------------|
+[default example-argocd-server  http://127.0.0.1:60750
+http://127.0.0.1:60751]
+! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
 
 
 ```
-
-
 ## 8. Set up Prometheus and Grafana on minikube using Helm chart.
 ## Configure Jenkins pipeline to integrate with Argo CD:
    6.1 Add the Argo CD API token to Jenkins credentials.
