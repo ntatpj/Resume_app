@@ -447,6 +447,24 @@ http://127.0.0.1:60751]
 
 
 ```
+Launch ArgoCD GUI
+![image](https://github.com/user-attachments/assets/a72adf89-a6c7-422d-846d-ac5a78461f4c)
+
+For password cehck the password stored in secret file
+
+```
+C:\Users\ADMIN>kubectl get secrets
+NAME                                    TYPE                DATA   AGE
+argocd-secret                           Opaque              5      15h
+example-argocd-ca                       kubernetes.io/tls   3      15h
+example-argocd-cluster                  Opaque              1      15h
+example-argocd-default-cluster-config   Opaque              4      15h
+example-argocd-redis-initial-password   Opaque              2      15h
+example-argocd-tls                      kubernetes.io/tls   2      15h
+
+C:\Users\ADMIN>kubectl edit secrets example-argocd-cluster
+```
+Click on Create Application>
 ## 8. Set up Prometheus and Grafana on minikube using Helm chart.
 ## Configure Jenkins pipeline to integrate with Argo CD:
    6.1 Add the Argo CD API token to Jenkins credentials.
