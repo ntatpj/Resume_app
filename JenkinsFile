@@ -31,13 +31,13 @@ pipeline {
     stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "Resume_app"
-            GIT_USER_NAME = "neh1994"
+            GIT_USER_NAME = "ntatpj"
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
                     git config  user.email "tatpujen@gmail.com"
-                    git config  user.name "neh1994"
+                    git config  user.name "ntatpj"
                     BUILD_NUMBER=${BUILD_NUMBER}
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" Resume_app_manifest/deployment.yml
                     git add Resume_app_manifest/deployment.yml
