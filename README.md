@@ -585,12 +585,33 @@ ADMIN@DESKTOP-LOTVTQN MINGW64 ~
 $ minikube ip
 192.168.49.2
 ```
+##9. Setup Jenking pipeline sourcing Jenkins file from SCM. Jenkins file has all stages writen in it.
+
+A. Configure the Git and Docker hub credentials in Jenkins, so that when pipeline runs it can soure code from GIT and push image to DokcerHub.
+![image](https://github.com/user-attachments/assets/d29e5c6d-a4b2-4377-b9fc-e4d97760247d)
+
+
+Click on "admin" in top right corner > Credentials > Stores scoped for admin, click on User:admin here > Gloabl credentials >
+
+![image](https://github.com/user-attachments/assets/26c5d901-e245-4872-a743-73e84a8c4432)
+
+Goto dashboards> New Pipeline.
+Select Item type "Pipeline" > OK
+![image](https://github.com/user-attachments/assets/a55e4a6f-3a97-4ceb-ae07-399dfcce10ad)
+
+Scroll down, select "Pipeline script from SCM"
+![image](https://github.com/user-attachments/assets/e1c8c3b3-a34a-40f1-9f3b-fda1fad62678)
+
+Click on build now.
+![image](https://github.com/user-attachments/assets/d0eb2202-c3cf-4bc6-abba-e20704b895af)
+
 
 ## Configure Jenkins pipeline to integrate with Argo CD:
    6.1 Add the Argo CD API token to Jenkins credentials.
    6.2 Update the Jenkins pipeline to include the Argo CD deployment stage.
 
 ###. Run the Jenkins pipeline:
+
    7.1 Trigger the Jenkins pipeline to start the CI/CD process for the Python application.
    7.2 Monitor the pipeline stages and fix any issues that arise.
    
