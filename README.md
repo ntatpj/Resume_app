@@ -470,6 +470,7 @@ Click on Create Application
 ![image](https://github.com/user-attachments/assets/bac825c8-ee86-4e11-abce-5276217e7e38)
 
 Click on Create 
+![image](https://github.com/user-attachments/assets/b62744ef-551c-4804-ab95-5492abe74842)
 
 ## 8. Set up Prometheus and Grafana on minikube using Helm chart.
 ## Configure Jenkins pipeline to integrate with Argo CD:
