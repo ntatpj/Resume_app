@@ -605,6 +605,8 @@ Scroll down, select "Pipeline script from SCM"
 Click on build now.
 ![image](https://github.com/user-attachments/assets/d0eb2202-c3cf-4bc6-abba-e20704b895af)
 
+To see the logs, scroll down and select "Console logs"
+![image](https://github.com/user-attachments/assets/9d2cb05d-32c9-4d06-bf72-325611b19431)
 
 ## Configure Jenkins pipeline to integrate with Argo CD:
    6.1 Add the Argo CD API token to Jenkins credentials.
