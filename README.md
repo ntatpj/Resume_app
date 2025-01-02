@@ -537,8 +537,54 @@ For more information on running Prometheus, visit:
 https://prometheus.io/
 
 ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+```
+Check the prometheus pods are up and running.
+```
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ kubectl get po
+NAME                                                 READY   STATUS              RESTARTS         AGE
+example-argocd-application-controller-0              1/1     Running             1 (162m ago)     4h30m
+example-argocd-redis-64ffff548d-c6qzw                1/1     Running             1 (162m ago)     5h3m
+example-argocd-repo-server-76d55855fc-zjdw9          1/1     Running             8 (162m ago)     16h
+example-argocd-server-798575995-gh2v6                1/1     Running             25 (2m39s ago)   16h
+prometheus-alertmanager-0                            1/1     Running             0                5m36s
+prometheus-kube-state-metrics-575d666cdf-bcwz6       1/1     Running             0                5m40s
+prometheus-prometheus-node-exporter-c6jp9            1/1     Running             0                5m38s
+prometheus-prometheus-pushgateway-576b8c6cd8-44hj5   1/1     Running             0                5m40s
 
 ```
+The services attached to prometheus pods are type CLusterIP, inorder to acccess it on GUI change to NodePort.
+```
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-ext
+service/prometheus-server-ext exposed
+
+$ kubectl get svc
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
+example-argocd-metrics                ClusterIP   10.99.77.234     <none>        8082/TCP            17h
+example-argocd-redis                  ClusterIP   10.99.192.14     <none>        6379/TCP            17h
+example-argocd-repo-server            ClusterIP   10.103.238.38    <none>        8081/TCP,8084/TCP   17h
+example-argocd-server                 ClusterIP   10.102.210.196   <none>        80/TCP,443/TCP      16h
+example-argocd-server-metrics         ClusterIP   10.103.9.69      <none>        8083/TCP            17h
+kubernetes                            ClusterIP   10.96.0.1        <none>        443/TCP             17h
+prometheus-alertmanager               ClusterIP   10.100.130.155   <none>        9093/TCP            28m
+prometheus-alertmanager-headless      ClusterIP   None             <none>        9093/TCP            28m
+prometheus-kube-state-metrics         ClusterIP   10.97.3.158      <none>        8080/TCP            28m
+prometheus-prometheus-node-exporter   ClusterIP   10.97.130.111    <none>        9100/TCP            28m
+prometheus-prometheus-pushgateway     ClusterIP   10.100.136.5     <none>        9091/TCP            28m
+prometheus-server                     ClusterIP   10.102.115.186   <none>        80/TCP              28m
+prometheus-server-ext                 NodePort    10.105.7.59      <none>        80:31751/TCP        31s
+resume-app-service                    NodePort    10.99.240.165    <none>        80:31882/TCP        68m
+
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+```
+Check minikube IP
+```
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ minikube ip
+192.168.49.2
+```
+
 ## Configure Jenkins pipeline to integrate with Argo CD:
    6.1 Add the Argo CD API token to Jenkins credentials.
    6.2 Update the Jenkins pipeline to include the Argo CD deployment stage.
