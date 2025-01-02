@@ -464,11 +464,12 @@ example-argocd-tls                      kubernetes.io/tls   2      15h
 
 C:\Users\ADMIN>kubectl edit secrets example-argocd-cluster
 ```
-Click on Create Application>
+Click on Create Application
 ![image](https://github.com/user-attachments/assets/abc3e72d-2fdc-4d37-a7b8-a73056dc4aa6)
 
-![image](https://github.com/user-attachments/assets/a5dac8e7-3101-43ed-9eab-8924dacce7ca)
-Click on Create Application
+![image](https://github.com/user-attachments/assets/bac825c8-ee86-4e11-abce-5276217e7e38)
+
+Click on Create 
 
 ## 8. Set up Prometheus and Grafana on minikube using Helm chart.
 ## Configure Jenkins pipeline to integrate with Argo CD:
