@@ -26,7 +26,8 @@ Create EC2 instance. Select t3.large with security group having inbound allowing
 Go to AWS Console
 Instances(running)
 Launch instances
-![image](https://github.com/user-attachments/assets/94938176-dc0d-44bd-9950-a9769346d193)
+![image](https://github.com/user-attachments/assets/9bbe5a06-6c8c-4889-86f3-51972e4fd174)
+
 
 
  <h3> 2.   Install Jenkins. </h3>   
