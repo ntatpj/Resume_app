@@ -463,7 +463,18 @@ example-argocd-default-cluster-config   Opaque              4      15h
 example-argocd-redis-initial-password   Opaque              2      15h
 example-argocd-tls                      kubernetes.io/tls   2      15h
 
-C:\Users\ADMIN>kubectl edit secrets example-argocd-cluster
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$  kubectl get secret example-argocd-cluster -o json
+{
+    "apiVersion": "v1",
+    "data": {
+        "admin.password": "Y0lwd250RW1KQzJzTTNkNDZMdUZiMWVPUXh5RFB2a1Y="
+    },
+
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ echo Y0lwd250RW1KQzJzTTNkNDZMdUZiMWVPUXh5RFB2a1Y= | base64 -d
+cIpwntEmJC2sM3d46LuFb1eOQxyDPvkV
+
 ```
 Click on Create Application
 ![image](https://github.com/user-attachments/assets/abc3e72d-2fdc-4d37-a7b8-a73056dc4aa6)
