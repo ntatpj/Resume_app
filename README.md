@@ -596,6 +596,35 @@ ADMIN@DESKTOP-LOTVTQN MINGW64 ~
 $ minikube ip
 192.168.49.2
 ```
+Now perfrom port forward on SVC, and it worked.
+Performed below steps:
+```
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ kubectl port-forward svc/prometheus-server 9090:80
+Forwarding from 127.0.0.1:9090 -> 9090
+Forwarding from [::1]:9090 -> 9090
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+E0103 17:27:42.904416   14796 portforward.go:381] error copying from remote stream to local connection: readfrom tcp6 [::1]:9090->[::1]:54537: write tcp6 [::1]:9090->[::1]:54537: wsasend: An established connection was aborted by the software in your host machine.
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+
+```
+![image](https://github.com/user-attachments/assets/20da8fbb-bd1f-465f-8e11-f279dcb23080)
+
+
+
+
 ##9. Setup Jenking pipeline sourcing Jenkins file from SCM. Jenkins file has all stages writen in it.
 
 A. Configure the Git and Docker hub credentials in Jenkins, so that when pipeline runs it can soure code from GIT and push image to DokcerHub.
