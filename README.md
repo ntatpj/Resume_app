@@ -657,3 +657,64 @@ To see the logs, scroll down and select "Console logs"
    7.1 Trigger the Jenkins pipeline to start the CI/CD process for the Python application.
    7.2 Monitor the pipeline stages and fix any issues that arise.
    
+##10. Once the Jenkins Pipeline is successful, it will push the image to docker hub and make changes in version for the image.
+##11. In ArgoCD we are creating one project
+
+Pod has target port 800
+
+```ADMIN@DESKTOP-LOTVTQN MINGW64 /
+$ kubectl describe po resume-app-59b9597d74-4qnmh
+Name:             resume-app-59b9597d74-4qnmh
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Mon, 06 Jan 2025 22:15:47 +0530
+Labels:           app=resume-app
+                  pod-template-hash=59b9597d74
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.250
+IPs:
+  IP:           10.244.0.250
+Controlled By:  ReplicaSet/resume-app-59b9597d74
+Containers:
+  resume-app:
+    Container ID:   docker://0164a0cccf7fd42e2e2f9c470ba35d38ffd23d1295fb405713238bc590ed5b39
+    Image:          ntatpj/docker-resume-image:2
+    Image ID:       docker-pullable://ntatpj/docker-resume-image@sha256:479b68ae9e9ae64688221a0522a344a2afd213b75648b83a7acd56c56974efe3
+    Port:           800/TCP
+```
+
+And the service is listening on 80 inside the cluster
+
+```
+$ kubectl get svc
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
+example-argocd-metrics                ClusterIP   10.99.170.152    <none>        8082/TCP            3h23m
+example-argocd-redis                  ClusterIP   10.100.216.117   <none>        6379/TCP            3h24m
+example-argocd-repo-server            ClusterIP   10.102.224.49    <none>        8081/TCP,8084/TCP   3h24m
+example-argocd-server                 ClusterIP   10.98.179.64     <none>        80/TCP,443/TCP      3h24m
+example-argocd-server-metrics         ClusterIP   10.102.252.248   <none>        8083/TCP            3h24m
+kubernetes                            ClusterIP   10.96.0.1        <none>        443/TCP             4d22h
+prometheus-alertmanager               ClusterIP   10.100.130.155   <none>        9093/TCP            4d5h
+prometheus-alertmanager-headless      ClusterIP   None             <none>        9093/TCP            4d5h
+prometheus-kube-state-metrics         ClusterIP   10.97.3.158      <none>        8080/TCP            4d5h
+prometheus-prometheus-node-exporter   ClusterIP   10.97.130.111    <none>        9100/TCP            4d5h
+prometheus-prometheus-pushgateway     ClusterIP   10.100.136.5     <none>        9091/TCP            4d5h
+prometheus-server                     ClusterIP   10.102.115.186   <none>        80/TCP              4d5h
+prometheus-server-ext                 NodePort    10.105.7.59      <none>        80:31751/TCP        4d5h
+resume-app-service                    NodePort    10.104.54.38     <none>        80:30656/TCP        43m
+
+```
+Hence we perform port forward
+```
+$ kubectl port-forward svc/resume-app-service 800:80
+Forwarding from 127.0.0.1:800 -> 8000
+Forwarding from [::1]:800 -> 8000
+Handling connection for 800
+Handling connection for 800
+Handling connection for 800
+```
+And we are able to launch our application on browser
+![image](https://github.com/user-attachments/assets/58984631-4efa-47ce-96b8-247b922d826d)
