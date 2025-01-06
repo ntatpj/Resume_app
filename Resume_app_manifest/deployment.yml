@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: resume-app
-        image: neh1994/docker-resume-image:2
+        image: ntatpj/docker-resume-image:2
         ports:
         - containerPort: 800
