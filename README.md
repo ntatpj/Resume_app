@@ -681,6 +681,64 @@ $  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/
 
 
 ```
+Check the pod, service 
+```
+$ kubectl get po | grep -i grafana
+NAME                                                 READY   STATUS    RESTARTS         AGE
+grafana-767f7898d5-gn9fl                             1/1     Running   0                22m
+
+$ kubectl get svc | grep -i grafa
+grafana                               ClusterIP   10.98.108.12     <none>        80/TCP              27m
+
+$ kubectl expose service grafana --type=NodePort --target-port=3000 --name=grafana-ext
+service/grafana-ext exposed
+
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ kubectl get svc | grep -i grafa
+grafana                               ClusterIP   10.98.108.12     <none>        80/TCP              30m
+grafana-ext                           NodePort    10.111.201.129   <none>        80:31625/TCP        4s
+
+
+```
+Check target port for grafana pod
+
+```
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$ kubectl describe po grafana
+Name:             grafana-767f7898d5-gn9fl
+Namespace:        default
+Priority:         0
+Service Account:  grafana
+Node:             minikube/192.168.49.2
+Start Time:       Mon, 06 Jan 2025 23:40:06 +0530
+Labels:           app.kubernetes.io/instance=grafana
+                  app.kubernetes.io/name=grafana
+                  app.kubernetes.io/version=11.4.0
+                  helm.sh/chart=grafana-8.8.2
+                  pod-template-hash=767f7898d5
+Annotations:      checksum/config: 0e9cbd0ea8e24e32f7dfca5bab17a2ba05652642f0a09a4882833ae88e4cc4a3
+                  checksum/sc-dashboard-provider-config: e70bf6a851099d385178a76de9757bb0bef8299da6d8443602590e44f05fdf24
+                  checksum/secret: 674b445d86ff90dab5348bfa243c6422efdd89f10c1b3f5b8e7df09495973ca5
+                  kubectl.kubernetes.io/default-container: grafana
+Status:           Running
+IP:               10.244.0.254
+IPs:
+  IP:           10.244.0.254
+Controlled By:  ReplicaSet/grafana-767f7898d5
+Containers:
+  grafana:
+    Container ID:    docker://ae9eb225665f4d954389afc2b20d0fc36f62cd643f17a3ecece5f748942cdafd
+    Image:           docker.io/grafana/grafana:11.4.0
+    Image ID:        docker-pullable://grafana/grafana@sha256:d8ea37798ccc41061a62ab080f2676dda6bf7815558499f901bdb0f533a456fb
+    Ports:           3000/TCP, 9094/TCP, 9094/UDP, 6060/TCP
+
+```
+Expose
+```
+kubectl port-forward svc/grafana 6060:80
+```
+
+![image](https://github.com/user-attachments/assets/f617a39a-250c-4bc3-b119-dfedd2a21962)
 
 Note:
 Ref: https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md
