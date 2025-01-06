@@ -623,7 +623,7 @@ Handling connection for 9090
 ![image](https://github.com/user-attachments/assets/20da8fbb-bd1f-465f-8e11-f279dcb23080)
 
 
-##9. Install Grafana.
+## 9. Install Grafana.
 Perform below steps:
 
 Add helm repo of grafana and perfrom helm repo update.
@@ -749,7 +749,7 @@ grafana/grafana (the second part): This is the chart name in the form of reposit
 grafana: This is the repository name where the chart is hosted. It points to the official Grafana Helm chart repository (https://grafana.github.io/helm-charts).
 grafana: This is the chart name itself, referring to the Grafana chart available in the grafana repository.
 
-##10. Setup Jenking pipeline sourcing Jenkins file from SCM. Jenkins file has all stages writen in it.
+## 10. Setup Jenking pipeline sourcing Jenkins file from SCM. Jenkins file has all stages writen in it.
 
 A. Configure the Git and Docker hub credentials in Jenkins, so that when pipeline runs it can soure code from GIT and push image to DokcerHub.
 ![image](https://github.com/user-attachments/assets/d29e5c6d-a4b2-4377-b9fc-e4d97760247d)
@@ -781,8 +781,8 @@ To see the logs, scroll down and select "Console logs"
    7.1 Trigger the Jenkins pipeline to start the CI/CD process for the Python application.
    7.2 Monitor the pipeline stages and fix any issues that arise.
    
-##11. Once the Jenkins Pipeline is successful, it will push the image to docker hub and make changes in version for the image.
-##12. In ArgoCD we have created one project, just perform sync to it.
+## 11. Once the Jenkins Pipeline is successful, it will push the image to docker hub and make changes in version for the image.
+## 12. In ArgoCD we have created one project, just perform sync to it.
 
 Pod has target port 800
 
