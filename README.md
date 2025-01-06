@@ -623,9 +623,75 @@ Handling connection for 9090
 ![image](https://github.com/user-attachments/assets/20da8fbb-bd1f-465f-8e11-f279dcb23080)
 
 
+##9. Install Grafana.
+Perform below steps:
+
+Add helm repo of grafana and perfrom helm repo update.
+```
+$ helm repo add grafana https://grafana.github.io/helm-charts
+"grafana" has been added to your repositories
+
+$ helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "eks" chart repository
+...Successfully got an update from the "grafana" chart repository
+...Successfully got an update from the "prometheus-community" chart repository
+Update Complete. ⎈Happy Helming!⎈
+```
+Install grafana.
+
+```
+$ helm install grafana grafana/grafana
+NAME: grafana
+LAST DEPLOYED: Mon Jan  6 23:32:34 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get your 'admin' user password by running:
+
+   kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 
 
-##9. Setup Jenking pipeline sourcing Jenkins file from SCM. Jenkins file has all stages writen in it.
+2. The Grafana server can be accessed via port 80 on the following DNS name from within your cluster:
+
+   grafana.default.svc.cluster.local
+
+   Get the Grafana URL to visit by running these commands in the same shell:
+     export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
+     kubectl --namespace default port-forward $POD_NAME 3000
+
+3. Login with the password from step 1 and the username: admin
+#################################################################################
+######   WARNING: Persistence is disabled!!! You will lose your data when   #####
+######            the Grafana pod is terminated.                            #####
+#################################################################################
+
+$ kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+UA8mLmfRHUMAJkpQPm3VzfpgidpRyy3QMhMXRKIn
+
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
+     kubectl --namespace default port-forward $POD_NAME 3000
+error: unable to forward port because pod is not running. Current status=Pending
+
+ADMIN@DESKTOP-LOTVTQN MINGW64 ~
+$  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
+
+
+```
+
+Note:
+Ref: https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md
+grafana (the first part): This is the release name. It's the name you assign to the deployment of this Helm chart. You can choose any name you like for the release, and it will be used to track and manage the release. In this case, the release name is grafana, which means that the deployed Grafana instance will be referred to by this name in subsequent Helm commands (e.g., upgrading, uninstalling).
+
+grafana/grafana (the second part): This is the chart name in the form of repository/chart-name. It specifies which chart to install. In this case:
+
+grafana: This is the repository name where the chart is hosted. It points to the official Grafana Helm chart repository (https://grafana.github.io/helm-charts).
+grafana: This is the chart name itself, referring to the Grafana chart available in the grafana repository.
+
+##10. Setup Jenking pipeline sourcing Jenkins file from SCM. Jenkins file has all stages writen in it.
 
 A. Configure the Git and Docker hub credentials in Jenkins, so that when pipeline runs it can soure code from GIT and push image to DokcerHub.
 ![image](https://github.com/user-attachments/assets/d29e5c6d-a4b2-4377-b9fc-e4d97760247d)
@@ -657,8 +723,8 @@ To see the logs, scroll down and select "Console logs"
    7.1 Trigger the Jenkins pipeline to start the CI/CD process for the Python application.
    7.2 Monitor the pipeline stages and fix any issues that arise.
    
-##10. Once the Jenkins Pipeline is successful, it will push the image to docker hub and make changes in version for the image.
-##11. In ArgoCD we are creating one project
+##11. Once the Jenkins Pipeline is successful, it will push the image to docker hub and make changes in version for the image.
+##12. In ArgoCD we have created one project, just perform sync to it.
 
 Pod has target port 800
 
