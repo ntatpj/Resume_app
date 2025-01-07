@@ -21,6 +21,8 @@ pipeline {
       steps {
         script {
           sh """
+          wget -qO- https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-<version>.zip | unzip -d /tmp/ && \
+          export PATH="/tmp/sonar-scanner-2.17.3/bin:$PATH"
           sonar-scanner \
             -Dsonar.projectKey=python-app \
             -Dsonar.sources=. \
