@@ -20,6 +20,7 @@ pipeline {
       }
       steps {
         script {
+          withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
           sh """
           wget -qO- https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-<version>.zip | unzip -d /tmp/ && \
           export PATH="/tmp/sonar-scanner-2.17.3/bin:$PATH"
