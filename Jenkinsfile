@@ -1,4 +1,19 @@
-stage('SonarQube Analysis') {
+pipeline {
+  agent {
+    docker {
+      image 'abhishekf5/maven-abhishek-docker-agent:v1'
+      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+    }
+  }
+  stages {
+    stage('Checkout') {
+      steps {
+        sh 'echo passed'
+        //git branch: 'main', url: 'https://github.com/neh1994/Resume_app'
+      }
+    }
+
+   stage('SonarQube Analysis') {
       environment {
         SONAR_HOST_URL = 'https://your-sonarqube-server.com'
         SONAR_AUTH_TOKEN = credentials('sonarqube-token')
@@ -15,3 +30,50 @@ stage('SonarQube Analysis') {
         }
       }
     }
+    stage('Build and Push Docker Image') {
+      environment {
+        DOCKER_IMAGE = "ntatpj/docker-resume-image:${BUILD_NUMBER}"
+        // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
+        REGISTRY_CREDENTIALS = credentials('docker-cred')
+      }
+      steps {
+        script {
+            sh 'docker build -t ${DOCKER_IMAGE} .'
+            def dockerImage = docker.image("${DOCKER_IMAGE}")
+            docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
+                dockerImage.push()
+            }
+        }
+      }
+    }
+    stage('Update Deployment File') {
+        environment {
+            GIT_REPO_NAME = "Resume_app"
+            GIT_USER_NAME = "ntatpj"
+        }
+        steps {
+            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                sh '''
+                    git config  user.email "nehatatpuje1994@gmail.com"
+                    git config  user.name "ntatpj"
+                    BUILD_NUMBER=${BUILD_NUMBER}
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" Resume_app_manifest/deployment.yml
+                    git add Resume_app_manifest/deployment.yml
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                '''
+            }
+        }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
