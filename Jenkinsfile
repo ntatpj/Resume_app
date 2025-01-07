@@ -16,7 +16,7 @@ pipeline {
    stage('SonarQube Analysis') {
       environment {
         SONAR_HOST_URL = 'https://13.50.225.149:9000'
-        SONAR_AUTH_TOKEN = credentials('sonarqube-token')
+        SONAR_AUTH_TOKEN = credentials('sonarqube')
       }
       steps {
         script {
