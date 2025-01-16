@@ -395,6 +395,26 @@ To connect to your Redis server:
 
   redis-cli -h myargo-redis-ha.myargo.svc.cluster.local
 ```
+
+##OR Install ArgoCD manually:
+
+a. Install the operator first.
+goto https://operatorhub.io/operator/argocd-operator
+And click on 'Install'
+
+
+b. Install ArgoCd controller
+https://operatorhub.io/operator/argocd-operator
+Goto ArgoCD PRoject operator > Usage >  Basics
+copy paste the deployment file vi argocd.yaml.
+Apply this file to install argocd resources in minikube
+```
+kubectl apply -f argocd.yaml
+```
+Check using 
+```
+kubectl get po
+```
 Check the pods and services.
 ```
 $ kubectl get svc
@@ -407,7 +427,7 @@ example-argocd-server-metrics   ClusterIP   10.103.9.69      <none>        8083/
 kubernetes     
 
 ```
-If you notice above example-argocd-server is of type clusterIp, we will change ti to NodePort so that we can access the argocd GUI.
+If you notice above example-argocd-server is of type clusterIp, we will change to to NodePort so that we can access the argocd GUI.
 ```
 
 ADMIN@DESKTOP-LOTVTQN MINGW64 ~
